@@ -32,7 +32,7 @@ export default async function CompanyPage({ params }: { params: Promise<{ compan
   }
   
   const company = companyResult.data;
-  const businessAreas = areasResult.success ? areasResult.data : [];
+  const businessAreas = areasResult.success && areasResult.data ? areasResult.data : [];
 
   const breadcrumbs = [
     { label: company.name, href: `/${companyId}` },
