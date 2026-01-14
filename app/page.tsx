@@ -1,65 +1,172 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { Building2, Calendar, ArrowRight } from "lucide-react";
+import { Card } from "@tremor/react";
+import { useNavigationStore } from "@/store/navigation-store";
+import { useState } from "react";
+import { format } from "date-fns";
+import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getCompanies } from "@/actions/companies";
+
+export default function HomePage() {
+  const router = useRouter();
+  const { companyId, period, setCompanyId, setPeriod } = useNavigationStore();
+  
+  // Fetch companies from database
+  const { data: companies, isLoading, error } = useQuery({
+    queryKey: ['companies'],
+    queryFn: async () => {
+      const result = await getCompanies();
+      if (!result.success) throw new Error(result.error);
+      return result.data;
+    },
+  });
+  
+  const [startDate, setStartDate] = useState(
+    period.start ? format(period.start, 'yyyy-MM-dd') : ''
+  );
+  const [endDate, setEndDate] = useState(
+    period.end ? format(period.end, 'yyyy-MM-dd') : ''
+  );
+
+  const handleCompanyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCompanyId(e.target.value);
+  };
+
+  const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStartDate(e.target.value);
+    if (e.target.value && endDate) {
+      setPeriod(new Date(e.target.value), new Date(endDate));
+    }
+  };
+
+  const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEndDate(e.target.value);
+    if (startDate && e.target.value) {
+      setPeriod(new Date(startDate), new Date(e.target.value));
+    }
+  };
+
+  const handleContinue = () => {
+    if (companyId) {
+      router.push(`/${companyId}`);
+    }
+  };
+
+  const isFormComplete = companyId && startDate && endDate;
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main className="min-h-screen bg-gray-50 p-8">
+      <div className="mx-auto max-w-7xl space-y-6">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">ClinicCore</h1>
+          <p className="mt-2 text-gray-600">Sistema de Gestión Clínica</p>
+        </div>
+
+        {/* Company Selector Card */}
+        <Card className="p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <Building2 className="h-6 w-6 text-blue-600" />
+            <h3 className="text-lg font-semibold text-gray-900">Seleccionar Empresa</h3>
+          </div>
+          
+          {isLoading ? (
+            <div className="w-full px-4 py-3 text-center text-gray-500">
+              Cargando empresas...
+            </div>
+          ) : error ? (
+            <div className="w-full px-4 py-3 text-center text-red-600">
+              Error al cargar empresas
+            </div>
+          ) : (
+            <select 
+              className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={companyId || ''}
+              onChange={handleCompanyChange}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <option value="" disabled>Seleccione una empresa...</option>
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              {companies?.map((company: any) => (
+                <option key={company.id} value={company.id}>
+                  {company.name} ({company.code})
+                </option>
+              ))}
+            </select>
+          )}
+        </Card>
+
+        {/* Period Selector Card */}
+        <Card className="p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <Calendar className="h-6 w-6 text-green-600" />
+            <h3 className="text-lg font-semibold text-gray-900">Periodo</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Fecha Inicio
+              </label>
+              <input 
+                type="date" 
+                value={startDate}
+                onChange={handleStartDateChange}
+                className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Fecha Fin
+              </label>
+              <input 
+                type="date" 
+                value={endDate}
+                onChange={handleEndDateChange}
+                className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+            </div>
+          </div>
+        </Card>
+
+        {/* Welcome Instructions */}
+        <Card className="p-6">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Bienvenido a ClinicCore
+          </h2>
+          <p className="text-gray-600 mb-4">
+            Para comenzar a trabajar con el sistema, siga estos pasos:
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <ol className="list-decimal list-inside space-y-2 text-gray-700">
+            <li>Seleccione la empresa con la que desea trabajar</li>
+            <li>Configure el periodo de tiempo a consultar</li>
+            <li>Navegue por las diferentes áreas de negocio</li>
+            <li>Profundice en los dispositivos y datos específicos</li>
+          </ol>
+          
+          <div className="mt-6 rounded-lg bg-blue-50 border border-blue-200 p-4">
+            <p className="text-sm text-blue-800">
+              <strong>💡 Consejo:</strong> Su selección de empresa y periodo se mantendrá 
+              mientras navega por el sistema, permitiéndole acceder rápidamente a la 
+              información que necesita.
+            </p>
+          </div>
+
+          {/* Continue Button */}
+          <button
+            onClick={handleContinue}
+            disabled={!isFormComplete}
+            className={`mt-6 w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-colors ${
+              isFormComplete
+                ? 'bg-blue-600 text-white hover:bg-blue-700'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            }`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            Continuar
+            <ArrowRight className="h-5 w-5" />
+          </button>
+        </Card>
+      </div>
+    </main>
   );
 }

@@ -1,0 +1,390 @@
+{
+  "patients": [
+    {
+      "id": "patient-001",
+      "dni": "12345678",
+      "firstName": "Juan",
+      "lastName": "Pérez",
+      "birthDate": "1945-05-15",
+      "gender": "MALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-12345678",
+      "admission": {
+        "admissionDate": "2026-01-05",
+        "diagnosis": "Trastorno depresivo mayor",
+        "icd10Code": "F32.2",
+        "daysAdmitted": 6,
+        "device": "Internación Agudos"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2026-001",
+        "authorizedDays": 45,
+        "validFrom": "2026-01-05",
+        "validTo": "2026-02-19",
+        "daysRemaining": 39,
+        "status": "ACTIVE"
+      },
+      "lastEvolution": "2026-01-10",
+      "observations": "Paciente estable, responde bien al tratamiento"
+    },
+    {
+      "id": "patient-002",
+      "dni": "23456789",
+      "firstName": "María",
+      "lastName": "González",
+      "birthDate": "1948-08-20",
+      "gender": "FEMALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-23456789",
+      "admission": {
+        "admissionDate": "2026-01-06",
+        "diagnosis": "Trastorno de ansiedad generalizada",
+        "icd10Code": "F41.1",
+        "daysAdmitted": 5,
+        "device": "Internación Agudos"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2026-002",
+        "authorizedDays": 45,
+        "validFrom": "2026-01-06",
+        "validTo": "2026-02-20",
+        "daysRemaining": 40,
+        "status": "ACTIVE"
+      },
+      "lastEvolution": "2026-01-09",
+      "observations": "Evolución favorable"
+    },
+    {
+      "id": "patient-003",
+      "dni": "34567890",
+      "firstName": "Carlos",
+      "lastName": "Rodríguez",
+      "birthDate": "1950-03-10",
+      "gender": "MALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-34567890",
+      "admission": {
+        "admissionDate": "2026-01-07",
+        "diagnosis": "Trastorno bipolar",
+        "icd10Code": "F31.9",
+        "daysAdmitted": 4,
+        "device": "Internación Agudos"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2026-003",
+        "authorizedDays": 45,
+        "validFrom": "2026-01-07",
+        "validTo": "2026-02-21",
+        "daysRemaining": 41,
+        "status": "ACTIVE"
+      },
+      "lastEvolution": "2026-01-10",
+      "observations": "Seguimiento cercano necesario"
+    },
+    {
+      "id": "patient-004",
+      "dni": "45678901",
+      "firstName": "Ana",
+      "lastName": "Martínez",
+      "birthDate": "1952-11-25",
+      "gender": "FEMALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-45678901",
+      "admission": {
+        "admissionDate": "2025-12-28",
+        "diagnosis": "Trastorno de pánico",
+        "icd10Code": "F41.0",
+        "daysAdmitted": 14,
+        "device": "Internación Agudos"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2025-100",
+        "authorizedDays": 45,
+        "validFrom": "2025-12-28",
+        "validTo": "2026-02-11",
+        "daysRemaining": 31,
+        "status": "ACTIVE",
+        "alert": "⚠️ Renovar en 31 días"
+      },
+      "lastEvolution": "2026-01-08",
+      "observations": "Participando en terapia grupal"
+    },
+    {
+      "id": "patient-005",
+      "dni": "56789012",
+      "firstName": "Pedro",
+      "lastName": "López",
+      "birthDate": "1946-07-30",
+      "gender": "MALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-56789012",
+      "admission": {
+        "admissionDate": "2025-12-20",
+        "diagnosis": "Trastorno adaptativo",
+        "icd10Code": "F43.2",
+        "daysAdmitted": 22,
+        "device": "Internación Agudos"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2025-095",
+        "authorizedDays": 60,
+        "validFrom": "2025-12-20",
+        "validTo": "2026-02-18",
+        "daysRemaining": 38,
+        "status": "ACTIVE"
+      },
+      "lastEvolution": "2026-01-09",
+      "observations": "Buena adherencia al tratamiento"
+    },
+    {
+      "id": "patient-006",
+      "dni": "67890123",
+      "firstName": "Laura",
+      "lastName": "Fernández",
+      "birthDate": "1949-12-05",
+      "gender": "FEMALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-67890123",
+      "admission": {
+        "admissionDate": "2025-11-15",
+        "diagnosis": "Esquizofrenia",
+        "icd10Code": "F20.0",
+        "daysAdmitted": 57,
+        "device": "Internación Agudos"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2025-080",
+        "authorizedDays": 90,
+        "validFrom": "2025-11-15",
+        "validTo": "2026-02-13",
+        "daysRemaining": 33,
+        "status": "ACTIVE"
+      },
+      "lastEvolution": "2026-01-10",
+      "observations": "Medicación estable"
+    },
+    {
+      "id": "patient-007",
+      "dni": "78901234",
+      "firstName": "Roberto",
+      "lastName": "Sánchez",
+      "birthDate": "1951-02-14",
+      "gender": "MALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-78901234",
+      "admission": {
+        "admissionDate": "2026-01-02",
+        "diagnosis": "Trastorno de estrés postraumático",
+        "icd10Code": "F43.1",
+        "daysAdmitted": 9,
+        "device": "Internación Agudos"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2026-004",
+        "authorizedDays": 45,
+        "validFrom": "2026-01-02",
+        "validTo": "2026-02-16",
+        "daysRemaining": 36,
+        "status": "ACTIVE"
+      },
+      "lastEvolution": "2026-01-10",
+      "observations": "En evaluación inicial"
+    },
+    {
+      "id": "patient-008",
+      "dni": "89012345",
+      "firstName": "Silvia",
+      "lastName": "Torres",
+      "birthDate": "1947-03-22",
+      "gender": "FEMALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-89012345",
+      "admission": {
+        "admissionDate": "2025-12-10",
+        "diagnosis": "Trastorno depresivo recurrente",
+        "icd10Code": "F33.1",
+        "daysAdmitted": 32,
+        "device": "Internación Agudos"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2025-092",
+        "authorizedDays": 60,
+        "validFrom": "2025-12-10",
+        "validTo": "2026-02-08",
+        "daysRemaining": 28,
+        "status": "ACTIVE",
+        "alert": "⚠️ Renovar en 28 días"
+      },
+      "lastEvolution": "2026-01-09",
+      "observations": "Mejoría progresiva"
+    },
+    {
+      "id": "patient-009",
+      "dni": "90123456",
+      "firstName": "Diego",
+      "lastName": "Ramírez",
+      "birthDate": "1953-09-17",
+      "gender": "MALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-90123456",
+      "admission": {
+        "admissionDate": "2025-11-25",
+        "diagnosis": "Trastorno psicótico agudo",
+        "icd10Code": "F29",
+        "daysAdmitted": 47,
+        "device": "Internación Agudos"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2025-085",
+        "authorizedDays": 90,
+        "validFrom": "2025-11-25",
+        "validTo": "2026-02-23",
+        "daysRemaining": 43,
+        "status": "ACTIVE"
+      },
+      "lastEvolution": "2026-01-08",
+      "observations": "Requiere seguimiento estrecho"
+    },
+    {
+      "id": "patient-010",
+      "dni": "01234567",
+      "firstName": "Claudia",
+      "lastName": "Vargas",
+      "birthDate": "1948-11-30",
+      "gender": "FEMALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-01234567",
+      "admission": {
+        "admissionDate": "2025-12-15",
+        "diagnosis": "Trastorno afectivo mixto",
+        "icd10Code": "F39",
+        "daysAdmitted": 27,
+        "device": "Internación Agudos"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2025-093",
+        "authorizedDays": 60,
+        "validFrom": "2025-12-15",
+        "validTo": "2026-02-13",
+        "daysRemaining": 33,
+        "status": "ACTIVE"
+      },
+      "lastEvolution": "2026-01-10",
+      "observations": "Estable, buena respuesta"
+    },
+    {
+      "id": "patient-011",
+      "dni": "11223344",
+      "firstName": "Jorge",
+      "lastName": "Molina",
+      "birthDate": "1950-04-18",
+      "gender": "MALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-11223344",
+      "admission": {
+        "admissionDate": "2025-10-01",
+        "diagnosis": "Esquizofrenia paranoide",
+        "icd10Code": "F20.0",
+        "daysAdmitted": 102,
+        "device": "Internación Prolongada"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2025-070",
+        "authorizedDays": 120,
+        "validFrom": "2025-10-01",
+        "validTo": "2026-01-29",
+        "daysRemaining": 18,
+        "status": "ACTIVE",
+        "alert": "🚨 URGENTE: Renovar en 18 días"
+      },
+      "lastEvolution": "2026-01-08",
+      "observations": "Tratamiento prolongado, evolución lenta"
+    },
+    {
+      "id": "patient-012",
+      "dni": "22334455",
+      "firstName": "Rosa",
+      "lastName": "Castro",
+      "birthDate": "1946-06-22",
+      "gender": "FEMALE",
+      "healthInsurance": "PAMI",
+      "affiliateNumber": "PAMI-22334455",
+      "admission": {
+        "admissionDate": "2025-09-15",
+        "diagnosis": "Trastorno bipolar severo",
+        "icd10Code": "F31.2",
+        "daysAdmitted": 118,
+        "device": "Internación Prolongada"
+      },
+      "authorization": {
+        "authNumber": "AUTH-2025-065",
+        "authorizedDays": 120,
+        "validFrom": "2025-09-15",
+        "validTo": "2026-01-13",
+        "daysRemaining": 2,
+        "status": "ACTIVE",
+        "alert": "🚨 CRÍTICO: Vence en 2 días"
+      },
+      "lastEvolution": "2026-01-09",
+      "observations": "Fase de estabilización, requiere extensión"
+    }
+  ],
+  "stats": {
+    "totalPacientesActivos": 12,
+    "autorizacionesPorVencer": 3,
+    "promedioEstadia": 38,
+    "ultimasEvoluciones": 8
+  },
+  "alertas": [
+    {
+      "priority": "critical",
+      "patient": "Rosa Castro",
+      "message": "Autorización vence en 2 días",
+      "authNumber": "AUTH-2025-065"
+    },
+    {
+      "priority": "urgent",
+      "patient": "Jorge Molina",
+      "message": "Autorización vence en 18 días",
+      "authNumber": "AUTH-2025-070"
+    },
+    {
+      "priority": "warning",
+      "patient": "Silvia Torres",
+      "message": "Autorización vence en 28 días",
+      "authNumber": "AUTH-2025-092"
+    }
+  ],
+  "recentEvolutions": [
+    {
+      "date": "2026-01-10",
+      "patient": "Juan Pérez",
+      "professional": "Dra. Sandra Gómez",
+      "summary": "Paciente presenta mejoría en el estado de ánimo. Continúa con medicación."
+    },
+    {
+      "date": "2026-01-10",
+      "patient": "Carlos Rodríguez",
+      "professional": "Dr. Roberto Díaz",
+      "summary": "Estado de ánimo estable. Se mantiene tratamiento actual."
+    },
+    {
+      "date": "2026-01-10",
+      "patient": "Claudia Vargas",
+      "professional": "Dra. Sandra Gómez",
+      "summary": "Buena respuesta al tratamiento. Sin cambios significativos."
+    },
+    {
+      "date": "2026-01-09",
+      "patient": "María González",
+      "professional": "Lic. Miguel Torres",
+      "summary": "Disminución de síntomas ansiosos. Evolución favorable."
+    },
+    {
+      "date": "2026-01-09",
+      "patient": "Pedro López",
+      "professional": "Dra. Lucía Benítez",
+      "summary": "Buena adherencia al tratamiento. Continuar con plan actual."
+    }
+  ]
+}

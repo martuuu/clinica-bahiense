@@ -1,0 +1,496 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================
+// CONFIGURACIÓN Y MAESTROS
+// ============================================
+
+model Company {
+  id        String   @id @default(uuid())
+  name      String
+  code      String   @unique
+  cuit      String   @unique
+  address   String?
+  phone     String?
+  email     String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  businessAreas BusinessArea[]
+  invoices      Invoice[]
+  users         User[]
+
+  @@index([code])
+  @@index([active])
+}
+
+model BusinessArea {
+  id            String   @id @default(uuid())
+  companyId     String
+  name          String
+  code          String
+  billingSystem String?
+  active        Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  company Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  devices Device[]
+
+  @@unique([companyId, code])
+  @@index([companyId])
+}
+
+model Device {
+  id             String     @id @default(uuid())
+  businessAreaId String
+  name           String
+  code           String
+  type           DeviceType
+  capacity       Int?
+  active         Boolean    @default(true)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  businessArea BusinessArea @relation(fields: [businessAreaId], references: [id], onDelete: Cascade)
+  agreements   Agreement[]
+  admissions   Admission[]
+  invoices     Invoice[]
+
+  @@unique([businessAreaId, code])
+  @@index([businessAreaId])
+  @@index([type])
+}
+
+enum DeviceType {
+  INTERNACION
+  VIVIENDA_ASISTIDA
+  HOSPITAL_DIA
+  CONSULTORIOS_EXTERNOS
+  CCSI
+}
+
+model HealthInsurance {
+  id              String        @id @default(uuid())
+  name            String
+  code            String        @unique
+  type            InsuranceType
+  cuit            String?
+  paymentTermDays Int           @default(30)
+  active          Boolean       @default(true)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  agreements Agreement[]
+  patients   Patient[]
+  invoices   Invoice[]
+
+  @@index([type])
+  @@index([active])
+}
+
+enum InsuranceType {
+  PAMI
+  OSDE
+  SWISS_MEDICAL
+  OSMEDICA
+  PARTICULAR
+  PRESUPUESTO
+  OTHER
+}
+
+model Agreement {
+  id                String    @id @default(uuid())
+  healthInsuranceId String
+  deviceId          String
+  validFrom         DateTime
+  validTo           DateTime?
+  urValue           Decimal?  @db.Decimal(10, 2)
+  billingRules      Json?
+  active            Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  healthInsurance HealthInsurance      @relation(fields: [healthInsuranceId], references: [id])
+  device          Device               @relation(fields: [deviceId], references: [id])
+  modalities      InternmentModality[]
+
+  @@index([healthInsuranceId])
+  @@index([deviceId])
+  @@index([validFrom, validTo])
+}
+
+model InternmentModality {
+  id          String   @id @default(uuid())
+  agreementId String
+  name        String
+  code        String
+  modules     Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  agreement  Agreement   @relation(fields: [agreementId], references: [id], onDelete: Cascade)
+  admissions Admission[]
+
+  @@unique([agreementId, code])
+  @@index([agreementId])
+}
+
+// ============================================
+// PACIENTES Y ADMISIONES
+// ============================================
+
+model Patient {
+  id                String   @id @default(uuid())
+  dni               String   @unique
+  firstName         String
+  lastName          String
+  birthDate         DateTime
+  gender            Gender
+  phone             String?
+  email             String?
+  address           String?
+  healthInsuranceId String
+  affiliateNumber   String?
+  emergencyContact  Json?
+  medicalHistory    Json?
+  active            Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  healthInsurance HealthInsurance @relation(fields: [healthInsuranceId], references: [id])
+  admissions      Admission[]
+  invoiceLines    InvoiceLine[]
+
+  @@index([dni])
+  @@index([healthInsuranceId])
+  @@index([lastName, firstName])
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+model Admission {
+  id            String          @id @default(uuid())
+  patientId     String
+  deviceId      String
+  modalityId    String?
+  admissionDate DateTime
+  dischargeDate DateTime?
+  status        AdmissionStatus @default(ACTIVE)
+  diagnosis     String
+  icd10Code     String?
+  dsmCode       String?
+  observations  String?         @db.Text
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  patient        Patient             @relation(fields: [patientId], references: [id])
+  device         Device              @relation(fields: [deviceId], references: [id])
+  modality       InternmentModality? @relation(fields: [modalityId], references: [id])
+  authorizations Authorization[]
+  services       Service[]
+  evolutions     Evolution[]
+  invoiceLines   InvoiceLine[]
+
+  @@index([patientId])
+  @@index([deviceId])
+  @@index([status])
+  @@index([admissionDate])
+}
+
+enum AdmissionStatus {
+  ACTIVE
+  DISCHARGED
+  TRANSFERRED
+  CANCELLED
+}
+
+model Authorization {
+  id                     String              @id @default(uuid())
+  admissionId            String
+  authNumber             String              @unique
+  authorizedDays         Int
+  validFrom              DateTime
+  validTo                DateTime
+  status                 AuthorizationStatus @default(ACTIVE)
+  requestedExtension     Boolean             @default(false)
+  extensionObservations  String?             @db.Text
+  observations           String?             @db.Text
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+
+  admission Admission @relation(fields: [admissionId], references: [id], onDelete: Cascade)
+
+  @@index([admissionId])
+  @@index([status])
+  @@index([validTo])
+}
+
+enum AuthorizationStatus {
+  ACTIVE
+  EXPIRED
+  EXTENDED
+  CANCELLED
+}
+
+model Evolution {
+  id             String   @id @default(uuid())
+  admissionId    String
+  professionalId String
+  evolutionDate  DateTime
+  content        String   @db.Text
+  signature      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  admission    Admission    @relation(fields: [admissionId], references: [id], onDelete: Cascade)
+  professional Professional @relation(fields: [professionalId], references: [id])
+
+  @@index([admissionId])
+  @@index([evolutionDate])
+}
+
+// ============================================
+// PROFESIONALES Y SERVICIOS
+// ============================================
+
+model Professional {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  dni       String   @unique
+  matricula String   @unique
+  specialty String
+  cuit      String?
+  email     String?
+  phone     String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  services         Service[]
+  evolutions       Evolution[]
+  professionalFees ProfessionalFee[]
+
+  @@index([dni])
+  @@index([matricula])
+  @@index([lastName, firstName])
+}
+
+model Service {
+  id             String      @id @default(uuid())
+  admissionId    String
+  professionalId String
+  serviceDate    DateTime
+  serviceType    ServiceType
+  duration       Int?
+  amount         Decimal     @db.Decimal(10, 2)
+  billed         Boolean     @default(false)
+  observations   String?     @db.Text
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  admission        Admission         @relation(fields: [admissionId], references: [id], onDelete: Cascade)
+  professional     Professional      @relation(fields: [professionalId], references: [id])
+  invoiceLines     InvoiceLine[]
+  professionalFees ProfessionalFee[]
+
+  @@index([admissionId])
+  @@index([professionalId])
+  @@index([serviceDate])
+  @@index([billed])
+}
+
+enum ServiceType {
+  CONSULTA
+  EVOLUCION
+  GUARDIA
+  INTERCONSULTA
+  TERAPIA_INDIVIDUAL
+  TERAPIA_GRUPAL
+  TALLER
+  OTRO
+}
+
+// ============================================
+// FACTURACIÓN
+// ============================================
+
+model Invoice {
+  id                String        @id @default(uuid())
+  companyId         String
+  healthInsuranceId String
+  deviceId          String
+  invoiceNumber     String        @unique
+  invoiceDate       DateTime
+  periodStart       DateTime
+  periodEnd         DateTime
+  totalAmount       Decimal       @db.Decimal(12, 2)
+  status            InvoiceStatus @default(DRAFT)
+  paymentDate       DateTime?
+  observations      String?       @db.Text
+  tangoExported     Boolean       @default(false)
+  tangoExportDate   DateTime?
+  afipCae           String?
+  afipCaeExpiry     DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  company         Company         @relation(fields: [companyId], references: [id])
+  healthInsurance HealthInsurance @relation(fields: [healthInsuranceId], references: [id])
+  device          Device          @relation(fields: [deviceId], references: [id])
+  lines           InvoiceLine[]
+
+  @@index([companyId])
+  @@index([healthInsuranceId])
+  @@index([status])
+  @@index([invoiceDate])
+  @@index([periodStart, periodEnd])
+}
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PRESENTED
+  PAID
+  REJECTED
+  PARTIALLY_PAID
+  CANCELLED
+}
+
+model InvoiceLine {
+  id          String  @id @default(uuid())
+  invoiceId   String
+  patientId   String
+  admissionId String?
+  serviceId   String?
+  description String
+  quantity    Decimal @db.Decimal(10, 2)
+  unitPrice   Decimal @db.Decimal(10, 2)
+  totalAmount Decimal @db.Decimal(12, 2)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  invoice          Invoice           @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  patient          Patient           @relation(fields: [patientId], references: [id])
+  admission        Admission?        @relation(fields: [admissionId], references: [id])
+  service          Service?          @relation(fields: [serviceId], references: [id])
+  professionalFees ProfessionalFee[]
+
+  @@index([invoiceId])
+  @@index([patientId])
+  @@index([admissionId])
+}
+
+model ProfessionalFee {
+  id            String    @id @default(uuid())
+  professionalId String
+  invoiceLineId String?
+  serviceId     String?
+  amount        Decimal   @db.Decimal(10, 2)
+  percentage    Decimal?  @db.Decimal(5, 2)
+  status        FeeStatus @default(PENDING)
+  paymentDate   DateTime?
+  observations  String?   @db.Text
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  professional Professional @relation(fields: [professionalId], references: [id])
+  invoiceLine  InvoiceLine? @relation(fields: [invoiceLineId], references: [id])
+  service      Service?     @relation(fields: [serviceId], references: [id])
+
+  @@index([professionalId])
+  @@index([status])
+  @@index([paymentDate])
+}
+
+enum FeeStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+// ============================================
+// USUARIOS Y SEGURIDAD
+// ============================================
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  role      UserRole
+  companyId String?
+  active    Boolean  @default(true)
+  lastLogin DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company   Company?   @relation(fields: [companyId], references: [id])
+  sessions  Session[]
+  auditLogs AuditLog[]
+
+  @@index([email])
+  @@index([role])
+  @@index([companyId])
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  COMPANY_ADMIN
+  MANAGER
+  PROFESSIONAL
+  BILLING
+  VIEWER
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+}
+
+// ============================================
+// AUDITORÍA
+// ============================================
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  action    String
+  entity    String
+  entityId  String?
+  oldData   Json?
+  newData   Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([action])
+  @@index([entity])
+  @@index([createdAt])
+}

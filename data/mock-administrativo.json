@@ -1,0 +1,321 @@
+{
+  "invoices": [
+    {
+      "id": "invoice-001",
+      "invoiceNumber": "FAC-CPB-2026-01-001",
+      "invoiceDate": "2026-01-05",
+      "periodStart": "2025-12-01",
+      "periodEnd": "2025-12-31",
+      "status": "ISSUED",
+      "healthInsurance": "PAMI",
+      "totalAmount": 375000,
+      "patient": "Juan Pérez",
+      "dni": "12345678",
+      "description": "Internación Aguda - 30 días x 10 UR",
+      "urModules": 10,
+      "urValue": 1250,
+      "days": 30,
+      "observations": "Diciembre 2025 - Modalidad Aguda"
+    },
+    {
+      "id": "invoice-002",
+      "invoiceNumber": "FAC-CPB-2025-12-002",
+      "invoiceDate": "2025-12-20",
+      "periodStart": "2025-11-01",
+      "periodEnd": "2025-11-30",
+      "status": "PRESENTED",
+      "healthInsurance": "PAMI",
+      "totalAmount": 480000,
+      "patient": "María González",
+      "dni": "23456789",
+      "description": "Internación Prolongada - 30 días x 8 UR",
+      "urModules": 8,
+      "urValue": 1250,
+      "days": 30,
+      "paymentDate": null,
+      "observations": "Noviembre 2025 - Presentada para cobro"
+    },
+    {
+      "id": "invoice-003",
+      "invoiceNumber": "FAC-CPB-2025-11-003",
+      "invoiceDate": "2025-11-15",
+      "periodStart": "2025-10-01",
+      "periodEnd": "2025-10-31",
+      "status": "PAID",
+      "healthInsurance": "PAMI",
+      "totalAmount": 300000,
+      "patient": "Carlos Rodríguez",
+      "dni": "34567890",
+      "description": "Internación Prolongada - 30 días x 8 UR",
+      "urModules": 8,
+      "urValue": 1250,
+      "days": 30,
+      "paymentDate": "2025-12-28",
+      "daysToPayment": 43,
+      "observations": "Octubre 2025 - Pagada"
+    },
+    {
+      "id": "invoice-004",
+      "invoiceNumber": "FAC-CPB-2025-12-004",
+      "invoiceDate": "2025-12-10",
+      "periodStart": "2025-11-01",
+      "periodEnd": "2025-11-30",
+      "status": "ISSUED",
+      "healthInsurance": "PAMI",
+      "totalAmount": 225000,
+      "patient": "Laura Fernández",
+      "dni": "67890123",
+      "description": "Internación Domiciliaria - 30 días x 6 UR",
+      "urModules": 6,
+      "urValue": 1250,
+      "days": 30,
+      "observations": "Noviembre 2025 - Pendiente presentación"
+    },
+    {
+      "id": "invoice-005",
+      "invoiceNumber": "FAC-CPB-2025-11-005",
+      "invoiceDate": "2025-11-20",
+      "periodStart": "2025-10-01",
+      "periodEnd": "2025-10-31",
+      "status": "PAID",
+      "healthInsurance": "PAMI",
+      "totalAmount": 262500,
+      "patient": "Roberto Sánchez",
+      "dni": "78901234",
+      "description": "Vivienda Supervisada - 30 días x 7 UR",
+      "urModules": 7,
+      "urValue": 1250,
+      "days": 30,
+      "paymentDate": "2026-01-08",
+      "daysToPayment": 49,
+      "observations": "Octubre 2025 - Pagada"
+    },
+    {
+      "id": "invoice-006",
+      "invoiceNumber": "FAC-CPB-2025-12-006",
+      "invoiceDate": "2025-12-28",
+      "periodStart": "2025-12-01",
+      "periodEnd": "2025-12-31",
+      "status": "PRESENTED",
+      "healthInsurance": "PAMI",
+      "totalAmount": 337500,
+      "patient": "Silvia Torres",
+      "dni": "89012345",
+      "description": "Hospital Día Intensivo - 25 días x 9 UR",
+      "urModules": 9,
+      "urValue": 1250,
+      "days": 25,
+      "observations": "Diciembre 2025 - En proceso de cobro"
+    },
+    {
+      "id": "invoice-007",
+      "invoiceNumber": "FAC-CPB-2025-10-007",
+      "invoiceDate": "2025-10-15",
+      "periodStart": "2025-09-01",
+      "periodEnd": "2025-09-30",
+      "status": "REJECTED",
+      "healthInsurance": "PAMI",
+      "totalAmount": 375000,
+      "patient": "Diego Ramírez",
+      "dni": "90123456",
+      "description": "Internación Aguda - 30 días x 10 UR",
+      "urModules": 10,
+      "urValue": 1250,
+      "days": 30,
+      "observations": "Septiembre 2025 - Rechazada por error administrativo"
+    },
+    {
+      "id": "invoice-008",
+      "invoiceNumber": "FAC-CPB-2025-11-008",
+      "invoiceDate": "2025-11-30",
+      "periodStart": "2025-10-01",
+      "periodEnd": "2025-10-31",
+      "status": "PARTIALLY_PAID",
+      "healthInsurance": "PAMI",
+      "totalAmount": 187500,
+      "patient": "Claudia Vargas",
+      "dni": "01234567",
+      "description": "Vivienda Asistida - 30 días x 5 UR",
+      "urModules": 5,
+      "urValue": 1250,
+      "days": 30,
+      "paymentDate": "2025-12-20",
+      "amountPaid": 93750,
+      "amountPending": 93750,
+      "daysToPayment": 20,
+      "observations": "Octubre 2025 - Pago parcial 50%"
+    },
+    {
+      "id": "invoice-009",
+      "invoiceNumber": "FAC-CPB-2025-09-009",
+      "invoiceDate": "2025-09-30",
+      "periodStart": "2025-08-01",
+      "periodEnd": "2025-08-31",
+      "status": "PAID",
+      "healthInsurance": "PAMI",
+      "totalAmount": 300000,
+      "patient": "Jorge Molina",
+      "dni": "11223344",
+      "description": "Internación Prolongada - 30 días x 8 UR",
+      "urModules": 8,
+      "urValue": 1250,
+      "days": 30,
+      "paymentDate": "2025-11-15",
+      "daysToPayment": 46,
+      "observations": "Agosto 2025 - Pagada"
+    },
+    {
+      "id": "invoice-010",
+      "invoiceNumber": "FAC-CPB-2025-10-010",
+      "invoiceDate": "2025-10-31",
+      "periodStart": "2025-09-01",
+      "periodEnd": "2025-09-30",
+      "status": "PAID",
+      "healthInsurance": "PAMI",
+      "totalAmount": 300000,
+      "patient": "Rosa Castro",
+      "dni": "22334455",
+      "description": "Internación Prolongada - 30 días x 8 UR",
+      "urModules": 8,
+      "urValue": 1250,
+      "days": 30,
+      "paymentDate": "2025-12-10",
+      "daysToPayment": 40,
+      "observations": "Septiembre 2025 - Pagada"
+    }
+  ],
+  "stats": {
+    "totalFacturado": 2845000,
+    "totalCobrado": 1156250,
+    "totalPendiente": 1688750,
+    "porcentajeCobrado": 40.6,
+    "diasPromedioCobro": 44,
+    "facturasPagadas": 4,
+    "facturasEmitidas": 2,
+    "facturasPresentadas": 2,
+    "facturasRechazadas": 1,
+    "facturasParciales": 1
+  },
+  "statusDistribution": [
+    {
+      "status": "PAID",
+      "label": "Pagadas",
+      "count": 4,
+      "total": 1156250,
+      "color": "green"
+    },
+    {
+      "status": "PRESENTED",
+      "label": "Presentadas",
+      "count": 2,
+      "total": 817500,
+      "color": "yellow"
+    },
+    {
+      "status": "ISSUED",
+      "label": "Emitidas",
+      "count": 2,
+      "total": 600000,
+      "color": "blue"
+    },
+    {
+      "status": "REJECTED",
+      "label": "Rechazadas",
+      "count": 1,
+      "total": 375000,
+      "color": "red"
+    },
+    {
+      "status": "PARTIALLY_PAID",
+      "label": "Pago Parcial",
+      "count": 1,
+      "total": 187500,
+      "color": "orange"
+    }
+  ],
+  "professionalFees": [
+    {
+      "id": "fee-001",
+      "professional": "Dra. Sandra Gómez",
+      "specialty": "Psiquiatría",
+      "servicesCount": 24,
+      "totalAmount": 120000,
+      "status": "PENDING",
+      "paymentDate": null,
+      "observations": "Servicios de diciembre 2025"
+    },
+    {
+      "id": "fee-002",
+      "professional": "Lic. Miguel Torres",
+      "specialty": "Psicología Clínica",
+      "servicesCount": 18,
+      "totalAmount": 63000,
+      "status": "PENDING",
+      "paymentDate": null,
+      "observations": "Servicios de diciembre 2025"
+    },
+    {
+      "id": "fee-003",
+      "professional": "Dr. Roberto Díaz",
+      "specialty": "Psiquiatría",
+      "servicesCount": 20,
+      "totalAmount": 100000,
+      "status": "PAID",
+      "paymentDate": "2026-01-05",
+      "observations": "Servicios de noviembre 2025"
+    },
+    {
+      "id": "fee-004",
+      "professional": "Lic. Carolina Ruiz",
+      "specialty": "Terapia Ocupacional",
+      "servicesCount": 15,
+      "totalAmount": 30000,
+      "status": "PAID",
+      "paymentDate": "2026-01-05",
+      "observations": "Servicios de noviembre 2025"
+    },
+    {
+      "id": "fee-005",
+      "professional": "Dra. Lucía Benítez",
+      "specialty": "Psiquiatría",
+      "servicesCount": 22,
+      "totalAmount": 110000,
+      "status": "PENDING",
+      "paymentDate": null,
+      "observations": "Servicios de diciembre 2025"
+    }
+  ],
+  "honorariosStats": {
+    "totalPendiente": 293000,
+    "totalPagado": 130000,
+    "profesionalesConPendiente": 3,
+    "serviciosPendientes": 79
+  },
+  "monthlyRevenue": [
+    {
+      "month": "Ago 2025",
+      "facturado": 450000,
+      "cobrado": 425000
+    },
+    {
+      "month": "Sep 2025",
+      "facturado": 525000,
+      "cobrado": 480000
+    },
+    {
+      "month": "Oct 2025",
+      "facturado": 487500,
+      "cobrado": 456250
+    },
+    {
+      "month": "Nov 2025",
+      "facturado": 555000,
+      "cobrado": 370000
+    },
+    {
+      "month": "Dic 2025",
+      "facturado": 827500,
+      "cobrado": 0
+    }
+  ]
+}
